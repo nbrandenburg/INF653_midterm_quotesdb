@@ -1,16 +1,4 @@
 <?php
-    // Headers
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-
-    // require_once '../../config/DatabaseLocal.php';
-    require_once '../../config/Database.php';
-    require_once '../../models/Category.php';
-
-    // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
-
     // Instantiate category object
     $category = new Category($db);
 

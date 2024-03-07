@@ -1,4 +1,7 @@
 <?php
+    // Instantiate author object
+    $author = new Author($db);
+
     // Get ID
     $author->id = isset($_GET['id']) ? $_GET['id'] : die();
 

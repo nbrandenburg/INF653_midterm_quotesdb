@@ -1,18 +1,4 @@
 <?php
-    // Headers
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: PUT');
-    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization,X-Requested-With');
-
-    // require_once '../../config/DatabaseLocal.php';
-    require_once '../../config/Database.php';
-    require_once '../../models/Quote.php';
-
-    // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
-
     // Instantiate quote object
     $quote = new Quote($db);
 
@@ -23,7 +9,7 @@
     $quote->id = $data->id;
     $quote->quote = $data->quote;
 
-    // Update post
+    // Update quote
     if($quote->update()) {
         echo json_encode(
         array('message' => 'Quote Updated')

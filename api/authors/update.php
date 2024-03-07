@@ -1,6 +1,6 @@
 <?php
-    // Get raw posted data
-    $data = json_decode(file_get_contents("php://input"));
+    // Instantiate author object
+    $author = new Author($db);
 
     // Set ID to update
     $author->id = $data->id;

@@ -1,4 +1,7 @@
 <?php
+    // Instantiate author object
+    $author = new Author($db);
+
     // Author query
     $result = $author->read();
     // Get row count
