@@ -9,9 +9,3 @@
         header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         exit();
     }
-
-    //require_once '../../config/DatabaseLocal.php';    
-    require_once '../../config/Database.php';
-    require_once '../../models/Author.php';
-    require_once '../../models/Category.php';
-    require_once '../../models/Quote.php';
