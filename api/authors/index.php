@@ -2,7 +2,9 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
-    require_once '../../models/Author.php';
+    // Instantiate Database & connect
+    $database = new Database();
+    $db = $database->connect();
 
     $method = $_SERVER['REQUEST_METHOD'];
 
