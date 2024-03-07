@@ -47,7 +47,3 @@
         header('Access-Control-Allow-Methods: DELETE');
         require_once 'delete.php';
     }
-
-    // Instantiate Database & connect
-    $database = new Database();
-    $db = $database->connect();

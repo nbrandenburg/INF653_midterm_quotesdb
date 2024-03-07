@@ -1,4 +1,8 @@
 <?php
+    // Instantiate Database & connect
+    $database = new Database();
+    $db = $database->connect();
+    
     // Instantiate quote object
     $quote = new Quote($db);
 

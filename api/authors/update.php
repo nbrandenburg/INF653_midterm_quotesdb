@@ -1,4 +1,8 @@
-<?php
+<?php    
+    // Instantiate Database & connect
+    $database = new Database();
+    $db = $database->connect();
+    
     // Instantiate author object
     $author = new Author($db);
 
