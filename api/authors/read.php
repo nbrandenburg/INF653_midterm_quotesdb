@@ -17,12 +17,15 @@
                 'author' => $author
             );
 
+            // Turn to JSON
+            json_encode($author_item);
+
             // Push to authors_arr
             array_push($authors_arr, $author_item);
         }
 
-        // Turn to JSON & output
-        echo json_encode($authors_arr);
+        // Output
+        echo $authors_arr;
 
     } else {       
         // No Authors 
