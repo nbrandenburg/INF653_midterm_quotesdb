@@ -5,10 +5,6 @@
     //require_once '../../config/DatabaseLocal.php';    
     require_once '../../config/Database.php';
     require_once '../../models/Author.php';
-    
-    // Instantiate Database & connect
-    $database = new Database();
-    $db = $database->connect();
 
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -51,3 +47,7 @@
         header('Access-Control-Allow-Methods: DELETE');
         require_once 'delete.php';
     }
+
+    // Instantiate Database & connect
+    $database = new Database();
+    $db = $database->connect();

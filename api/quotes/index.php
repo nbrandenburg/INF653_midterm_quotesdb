@@ -6,10 +6,6 @@
     require_once '../../config/Database.php';
     require_once '../../models/Quote.php';
 
-    // Instantiate Database & connect
-    $database = new Database();
-    $db = $database->connect();
-
     $method = $_SERVER['REQUEST_METHOD'];
 
     // Get raw posted data
@@ -56,3 +52,7 @@
         header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         require_once 'delete.php';
     }
+
+    // Instantiate Database & connect
+    $database = new Database();
+    $db = $database->connect();
