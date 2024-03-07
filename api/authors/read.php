@@ -25,7 +25,7 @@
         }
 
         // Output
-        echo $authors_arr;
+        echo json_encode($authors_arr);
 
     } else {       
         // No Authors 
