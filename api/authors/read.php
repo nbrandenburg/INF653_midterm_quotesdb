@@ -19,7 +19,7 @@
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);
 
-          $item_item = array(
+          $author_item = array(
             'id' => $id,
             'author' => $author
           );

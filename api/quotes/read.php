@@ -3,10 +3,10 @@
   $database = new Database();
   $db = $database->connect();
 
-  // Instantiate author object
+  // Instantiate quote object
   $quote = new Quote($db);
 
-  // Author read query
+  // Quote read query
   $result = $quote->read();
   
   // Get row count
@@ -19,7 +19,7 @@
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);
 
-          $item_item = array(
+          $quote_item = array(
             'id' => $id,
             'quote' => $quote,
             'author_id' => $author_id,
