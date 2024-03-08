@@ -9,8 +9,8 @@
         exit();
     }
 
-    // require_once '../../config/Database.php';
-    require_once '../../config/DatabaseLocal.php';
+    require_once '../../config/Database.php';
+    //require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Category.php';
 
     if ($method === 'GET') {
