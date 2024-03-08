@@ -9,18 +9,16 @@
         exit();
     }
 
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
-    require_once '../../models/Category.php';
-
-    if ($method === 'GET') {
+    elseif ($method === 'GET' && !isset($_GET['id'])) {
         header('Access-Control-Allow-Methods: GET');
         header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-        if(!isset($_GET['id'])) {
-            require_once 'read.php';
-        } else {
-            require_once 'read_single.php';
-        }        
+        require_once 'read.php';
+    }
+
+    elseif ($method === 'GET' && isset($_GET['id'])) {
+        header('Access-Control-Allow-Methods: GET');
+        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
+        require_once 'read_single.php';
     }
 
     elseif ($method === 'POST') {
