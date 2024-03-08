@@ -7,9 +7,8 @@ channel = "stable-22_11"
 
 [[ports]]
 localPort = 8000
-
 externalPort = 80
 
 [deployment]
-run = ["php", "-S", "0.0.0.0:8000", "-t", "."]
+run = ["sh", "-c", "php -S 0.0.0.0:8000 -t ."]
 deploymentTarget = "cloudrun"
