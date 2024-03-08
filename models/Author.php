@@ -6,8 +6,7 @@
 
       // Properties
       public $id;
-      public $name;
-      public $created_at;
+      public $author;
 
       // Constructor with Database
       public function __construct($db) {
@@ -17,8 +16,8 @@
       // Get Authors
       public function read() {
         // Create query
-        $query = 'SELECT id, author
-                  FROM ' . $this->table;
+        $query = ' SELECT id, author
+                   FROM ' . $this->table;
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
