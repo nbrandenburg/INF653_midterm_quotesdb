@@ -1,11 +1,6 @@
 <?php
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: GET');
-    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization,X-Requested-With');
-
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
+    //require_once '../../config/Database.php';
+    require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Quote.php';
 
     // Instantiate DB & connect
@@ -16,6 +11,7 @@
     $quote = new Quote($db);
 
     // Check set parameters
+
     if (isset($_GET['id'])) {
         $quote->id = $_GET['id'];
     }
@@ -27,21 +23,17 @@
     if (isset($_GET['category_id'])) {
         $quote->category_id = $_GET['category_id'];
     }
-
+ 
     // Get quote
     $quote->read_single();
 
-    if ($quote->read_single()) {
-        // Create array
-        $quote_arr = array(
-            'id' => $quote->id,
-            'quote' => $quote->quote,
-            'author_id' => $quote->author_id,
-            'category_id' => $quote->category_id
-        );
+    // Create array
+    $quote_arr = array(
+        'id' => $quote->id,
+        'quote' => $quote->quote,
+        'author_id' => $quote->author_id,
+        'category_id' => $quote->category_id
+    );
 
-        // Make JSON
-        echo json_encode($quote_arr);
-    } else {
-        echo json_encode(array('message' => 'No Quotes Found'));
-    }
+    // Make JSON
+    echo json_encode($quote_arr);

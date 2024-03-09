@@ -33,15 +33,24 @@
         // Get Single Quote
         public function read_single() {
             // Create query
-            $query = 'SELECT id, quote, author_id, category_id
+/*             $query = 'SELECT id, quote, author_id, category_id
                       FROM ' . $this->table . 
                     ' WHERE id = ? ';
 
-            //Prepare statement
+ */            
+                $query = 'SELECT id, quote, author_id, category_id
+                          FROM ' . $this->table . '
+                          SET id = :id, 
+                              author_id = :author_id, 
+                              category_id = :category_id ';
+ 
+            // Prepare statement
             $stmt = $this->conn->prepare($query);
 
-            // Bind ID
-            $stmt->bindParam(1, $this->id);
+            // Bind data
+            $stmt-> bindParam(':id', $this->id);
+            $stmt-> bindParam(':author_id', $this->author_id);
+            $stmt-> bindParam(':category_id', $this->category_id);
 
             // Execute query
             $stmt->execute();
@@ -101,11 +110,7 @@
             $stmt-> bindParam(':category_id', $this->category_id);
     
             // Execute query
-            if($stmt->execute()) {
-            return true;
-            } else {
-            return false;
-            }
+            return $stmt->execute() ? true : false;
         }
         
         // Delete Author

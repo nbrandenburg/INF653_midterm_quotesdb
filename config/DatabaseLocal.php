@@ -1,18 +1,16 @@
 <?php
     class Database {
         private $host = 'localhost';
-        private $port = '5432';
-        private $db_name = 'quotesdb';
-        private $username = 'postgres';
-        private $password = 'postgres';
+        private $dbname = 'quotesdb';
+        private $username = 'root';
+        private $password = '';
         private $conn;
 
         public function connect() {
             $this->conn = null;
-            $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->db_name}";
 
             try {
-                $this->conn = new PDO($dsn, $this->username, $this->password);
+                $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbname, $this->username, $this->password);
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             } catch(PDOException $e) {
@@ -22,3 +20,5 @@
             return $this->conn;
         }
     }
+
+    // http://localhost/php_rest_quotes/api/
