@@ -67,11 +67,7 @@
         $stmt-> bindParam(':author', $this->author);
 
         // Execute query
-        if($stmt->execute()) {
-          return true;
-        } else {
-          return false;
-        }          
+        return $stmt->execute() ? true : false;
       }
   
     // Update Author
@@ -93,11 +89,7 @@
       $stmt-> bindParam(':id', $this->id);
 
       // Execute query
-      if($stmt->execute()) {
-        return true;
-      } else {
-        return false;
-      }
+      return $stmt->execute() ? true : false;
     }
 
     // Delete Author
@@ -115,10 +107,6 @@
       $stmt-> bindParam(':id', $this->id);
 
       // Execute query
-      if($stmt->execute()) {
-        return true;
-      } else {
-        return false;
-      }      
+      return $stmt->execute() ? true : false;
     }  
   }

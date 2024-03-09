@@ -82,20 +82,15 @@
             $stmt-> bindParam(':category_id', $this->category_id);
 
             // Execute query
-            if($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }          
+            return $stmt->execute() ? true : false;
         }
         
         // Update Quote
         public function update() {
             // Create Query
             $query = 'UPDATE ' . $this->table . '
-                    SET quote = :quote, author_id = :author_id, category_id = :category_id
+                    SET quote = :quote
                     WHERE id = :id';
-    
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
     
@@ -106,14 +101,12 @@
             // Bind data
             $stmt-> bindParam(':quote', $this->quote);
             $stmt-> bindParam(':id', $this->id);
-            $stmt-> bindParam(':author_id', $this->author_id);
-            $stmt-> bindParam(':category_id', $this->category_id);
     
             // Execute query
             return $stmt->execute() ? true : false;
         }
         
-        // Delete Author
+        // Delete Quote
         public function delete() {
             // Create query
             $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
@@ -128,10 +121,6 @@
             $stmt-> bindParam(':id', $this->id);
     
             // Execute query
-            if($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }      
+            return $stmt->execute() ? true : false;
         }  
     }

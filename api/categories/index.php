@@ -4,38 +4,43 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization,X-Requested-With');
     $method = $_SERVER['REQUEST_METHOD'];
 
+    // Required for tests
     if ($method === 'OPTIONS') {
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
         header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         exit();
-    }
+    } 
+    
+    // Get raw posted data
+    $data = json_decode(file_get_contents("php://input"));
 
-    elseif ($method === 'GET' && !isset($_GET['id'])) {
+    // Read
+    if ($method === 'GET' && !isset($_GET['id'])) {
         header('Access-Control-Allow-Methods: GET');
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-        require_once 'read.php';
+        require_once 'read.php';    
     }
 
+    // Read Single
     elseif ($method === 'GET' && isset($_GET['id'])) {
         header('Access-Control-Allow-Methods: GET');
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-        require_once 'read_single.php';
+        require_once 'read_single.php';    
     }
 
+    // Create
     elseif ($method === 'POST') {
         header('Access-Control-Allow-Methods: POST');
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         require_once 'create.php';
     }
-
+    
+    // Update
     elseif ($method === 'PUT') {
         header('Access-Control-Allow-Methods: PUT');
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         require_once 'update.php';
     }
-
+    
+    // Delete
     elseif ($method === 'DELETE') {
         header('Access-Control-Allow-Methods: DELETE');
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
         require_once 'delete.php';
     }
+?>

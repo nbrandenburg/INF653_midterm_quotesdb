@@ -68,11 +68,7 @@
             $stmt-> bindParam(':category', $this->category);
 
             // Execute query
-            if($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }          
+            return $stmt->execute() ? true : false;
         }
 
         // Update Category
@@ -94,11 +90,7 @@
             $stmt-> bindParam(':id', $this->id);
     
             // Execute query
-            if($stmt->execute()) {
-            return true;
-            } else {
-            return false;
-            }
+            return $stmt->execute() ? true : false;
         } 
         
         // Delete Category
@@ -116,11 +108,5 @@
             $stmt-> bindParam(':id', $this->id);
     
             // Execute query
-            if($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }      
-        }  
-  
+            return $stmt->execute() ? true : false;        }  
     }
