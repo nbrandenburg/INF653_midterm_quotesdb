@@ -1,5 +1,1 @@
-SetEnv USERNAME "quotesdb_vpbp_user"
-SetEnv PASSWORD "3ZSqPUWqnbLTW50m0TljRHLZ2dZViV1e"
-SetEnv DBNAME "quotesdb_vpbp"
-SetEnv HOST "dpg-cnl8pmnsc6pc73ccbf80-a.oregon-postgres.render.com"
 SetEnv PORT "5432"
