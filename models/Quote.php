@@ -18,8 +18,14 @@
         // Get Quotes
         public function read() {
             // Create query
-            $query = 'SELECT id, quote, author_id, category_id
-                      FROM ' . $this->table;
+            $query = 'SELECT 
+                        q.id,
+                        q.quote,
+                        a.author,
+                        c.category
+                      FROM ' . $this->table . ' q
+                      INNER JOIN author a USING (author_id)
+                      INNER JOIN category c USING (category_id)';
 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
