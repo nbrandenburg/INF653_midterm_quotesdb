@@ -45,10 +45,7 @@
             // Execute query
             $stmt->execute();
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // set category if one exists, otherwise null
-            $this->category = $row['category'] ?? NULL;
+            return $stmt;
         }
 
         // Create Category

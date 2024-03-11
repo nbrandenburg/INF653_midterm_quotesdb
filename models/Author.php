@@ -44,10 +44,7 @@
         // Execute query
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // set author if one exists, otherwise null
-        $this->author = $row['author'] ?? NULL;
+        return $stmt;
       }
 
       // Create Author
@@ -94,7 +91,8 @@
     // Delete Author
     public function delete() {
       // Create query
-      $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+      $query = 'DELETE FROM ' . $this->table . 
+              ' WHERE id = :id';
 
       // Prepare Statement
       $stmt = $this->conn->prepare($query);

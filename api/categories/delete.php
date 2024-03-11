@@ -10,8 +10,20 @@
     $category->id = $data->id;
 
     // Delete post
-    if($category->delete()) {
-        echo json_encode(array('message' => 'Category deleted'));
-    } else {
-        echo json_encode(array('message' => 'Category not deleted'));
+    try {
+        $category->delete();
+
+        $category_arr = array(
+            'id' => $data->id,
+        );
+
+        echo json_encode($category_arr);
+
+    } catch(PDOException $e) {
+
+        $category_arr = array(
+            'id' => $data->id,
+        );
+
+        echo json_encode($category_arr);
     }

@@ -12,27 +12,34 @@
         // Get ID
         $author->id = $_GET['id'];
 
-        // Get author
-        $author->read_single();
+        // Author read_single query
+        $result = $author->read_single();
 
-        // Create array
-        $author_arr = array(
-            'id' => $author->id,
-            'author' => $author->author
-        );
+        // Get row count
+        $num = $result->rowCount();
 
-        // Check if there is an author assigned to that id
-        if($author_arr['author'] != NULL) {
-            // If author is not null, print json array
-            echo json_encode($author_arr);
+        // Check if any Authors
+        if($num > 0) {
+                $author_arr = array();
+
+                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+
+                $author_item = array(
+                    'id' => $id,
+                    'author' => $author
+                );
+
+                array_push($author_arr, $author_item);
+                }
+
+                // Turn to JSON & output
+                echo json_encode($author_arr);
 
         } else {
-            // If author is null, print message
-            echo json_encode(array('message' => 'author_id Not Found'));
+                // No Authors
+                echo json_encode(
+                array('message' => 'author_id Not Found')
+                );
         }
-        
-    } else {
-
-        // Id not set
-        echo json_encode(array('message' => 'author_id Not Found'));
     }

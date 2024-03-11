@@ -7,13 +7,38 @@
     $author = new Author($db);
 
     // Set ID to update
-    $author->id = $data->id;
+    $author->id = $data->id ?? NULL;
+    $author->author = $data->author ?? NULL;
 
-    $author->author = $data->author;
+    // Author update query
+    $updateResult = $author->update();
 
-    // Update post
-    if($author->update()) {
-        echo json_encode(array('message' => 'Author Updated'));
-    } else {
-        echo json_encode(array('message' => 'Author not updated'));
+    if($updateResult) {
+        // Author read_single query
+        $result = $author->read_single();
+
+        // Get row count
+        $num = $result->rowCount();
+
+        // Check if any Authors
+        if($num > 0) {
+                $author_arr = array();
+
+                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+
+                    $author_item = array(
+                        'id' => $id,
+                        'author' => $author
+                    );
+
+                    array_push($author_arr, $author_item);
+                }
+
+                // Turn to JSON & output
+                echo json_encode($author_arr);
+
+        } else {
+            echo json_encode(array('message' => 'Missing Required Parameters'));
+        }
     }

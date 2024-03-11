@@ -10,8 +10,20 @@
     $author->id = $data->id;
 
     // Delete post
-    if($author->delete()) {
-        echo json_encode(array('message' => 'Author deleted'));
-    } else {
-        echo json_encode(array('message' => 'Author not deleted'));
+    try {
+        $author->delete();
+
+        $author_arr = array(
+            'id' => $data->id,
+        );
+
+        echo json_encode($author_arr);
+
+    } catch(PDOException $e) {
+
+        $author_arr = array(
+            'id' => $data->id,
+        );
+
+        echo json_encode($author_arr);
     }

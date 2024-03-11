@@ -33,7 +33,7 @@
     } else {
         
         // If quote is null, print message
-        echo json_encode(array('message' => 'No Quote Found'));
+        echo json_encode(array('message' => 'No Quotes Found'));
         exit();
     }        
     

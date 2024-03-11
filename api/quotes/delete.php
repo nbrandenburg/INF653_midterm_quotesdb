@@ -9,9 +9,17 @@
     // Set ID to delete
     $quote->id = $data->id;
 
-    // Delete post
+    // Delete quote
+
     if($quote->delete()) {
-        echo json_encode(array('message' => 'Quote deleted'));
+
+            $quote_arr = array(
+                'id' => $data->id
+            );
+
+            // Turn to JSON & output
+            echo json_encode($quote_arr);
+
     } else {
-        echo json_encode(array('message' => 'Quote not deleted'));
+        echo json_encode(array('message' => 'No Quotes Found'));
     }

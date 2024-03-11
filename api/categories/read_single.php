@@ -12,29 +12,34 @@
         // Get ID
         $category->id = $_GET['id'];
 
-        // Get category
-        $category->read_single();
+        // Category read query
+        $result = $category->read_single();
 
-        // Create array
-        $category_arr = array(
-            'id' => $category->id,
-            'category' => $category->category
-        );
+        // Get row count
+        $num = $result->rowCount();
 
-        // Check if there is an category assigned to that id
-        if($category_arr['category'] != NULL) {
+        // Check if any Categories
+        if($num > 0) {
+                $category_arr = array();
 
-            // If category is not null, print json array
-            echo json_encode($category_arr);
+                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+
+                $category_item = array(
+                    'id' => $id,
+                    'category' => $category
+                );
+
+                array_push($category_arr, $category_item);
+                }
+
+                // Turn to JSON & output
+                echo json_encode($category_arr);
 
         } else {
-            
-            // If category is null, print message
-            echo json_encode(array('message' => 'category_id Not Found'));
+                // No Categories
+                echo json_encode(
+                array('message' => 'category_id Not Found')
+                );
         }
-        
-    } else {
-
-        // Id not set
-        echo json_encode(array('message' => 'author_id Not Found'));
     }
