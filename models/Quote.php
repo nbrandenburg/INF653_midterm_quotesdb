@@ -32,25 +32,16 @@
 
         // Get Single Quote
         public function read_single() {
-            // Create query
-/*             $query = 'SELECT id, quote, author_id, category_id
+            //Create query
+            $query = 'SELECT id, quote, author_id, category_id
                       FROM ' . $this->table . 
-                    ' WHERE id = ? ';
+                    ' WHERE id = :id ';
 
- */            
-                $query = 'SELECT id, quote, author_id, category_id
-                          FROM ' . $this->table . '
-                          SET id = :id, 
-                              author_id = :author_id, 
-                              category_id = :category_id ';
- 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
 
             // Bind data
             $stmt-> bindParam(':id', $this->id);
-            $stmt-> bindParam(':author_id', $this->author_id);
-            $stmt-> bindParam(':category_id', $this->category_id);
 
             // Execute query
             $stmt->execute();
@@ -58,10 +49,9 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // set properties
-            $this->id = $row['id'];
-            $this->quote = $row['quote'];
-            $this->author_id = $row['author_id'];
-            $this->category_id = $row['category_id'];
+            $this->quote = $row['quote'] ?? NULL;
+            $this->author_id = $row['author_id'] ?? NULL;
+            $this->category_id = $row['category_id'] ?? NULL;
         } 
         
         // Create Quote

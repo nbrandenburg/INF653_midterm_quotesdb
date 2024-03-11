@@ -33,22 +33,21 @@
         // Create query
         $query = 'SELECT id, author
                   FROM ' . $this->table . 
-                  ' WHERE id = ? ';
+                  ' WHERE id = :id ';
 
         //Prepare statement
         $stmt = $this->conn->prepare($query);
 
         // Bind ID
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(':id', $this->id);
 
         // Execute query
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // set properties
-        $this->id = $row['id'];
-        $this->author = $row['author'];
+        // set author if one exists, otherwise null
+        $this->author = $row['author'] ?? NULL;
       }
 
       // Create Author

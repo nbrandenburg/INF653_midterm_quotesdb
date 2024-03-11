@@ -6,17 +6,35 @@
     // Instantiate category object
     $category = new Category($db);
 
-    // Get ID
-    $category->id = isset($_GET['id']) ? $_GET['id'] : die();
+    // If id is set
+    if(isset($_GET['id'])) {
 
-    // Get category
-    $category->read_single();
+        // Get ID
+        $category->id = $_GET['id'];
 
-    // Create array
-    $category_arr = array(
-        'id' => $category->id,
-        'category' => $category->category
-    );
+        // Get category
+        $category->read_single();
 
-    // Make JSON
-    echo json_encode($category_arr);
+        // Create array
+        $category_arr = array(
+            'id' => $category->id,
+            'category' => $category->category
+        );
+
+        // Check if there is an category assigned to that id
+        if($category_arr['category'] != NULL) {
+
+            // If category is not null, print json array
+            echo json_encode($category_arr);
+
+        } else {
+            
+            // If category is null, print message
+            echo json_encode(array('message' => 'category_id Not Found'));
+        }
+        
+    } else {
+
+        // Id not set
+        echo json_encode(array('message' => 'author_id Not Found'));
+    }
