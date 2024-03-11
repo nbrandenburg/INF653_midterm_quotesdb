@@ -24,8 +24,9 @@
                         a.author,
                         c.category
                       FROM ' . $this->table . ' q
-                      INNER JOIN author a USING (author_id)
-                      INNER JOIN category c USING (category_id)';
+                      INNER JOIN authors a ON a.id = q.author_id
+                      INNER JOIN categories c ON c.id = q.category_id
+                      ORDER BY q.id';
 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
@@ -39,9 +40,15 @@
         // Get Single Quote
         public function read_single() {
             //Create query
-            $query = 'SELECT id, quote, author_id, category_id
-                      FROM ' . $this->table . 
-                    ' WHERE id = :id ';
+            $query = 'SELECT 
+                        q.id,
+                        q.quote,
+                        a.author,
+                        c.category
+                      FROM ' . $this->table . ' q
+                      INNER JOIN authors a ON a.id = q.author_id
+                      INNER JOIN categories c ON c.id = q.category_id
+                      WHERE q.id = :id';
 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
@@ -56,8 +63,8 @@
 
             // set properties
             $this->quote = $row['quote'] ?? NULL;
-            $this->author_id = $row['author_id'] ?? NULL;
-            $this->category_id = $row['category_id'] ?? NULL;
+            $this->author = $row['author'] ?? NULL;
+            $this->category = $row['category'] ?? NULL;
         } 
         
         // Create Quote
