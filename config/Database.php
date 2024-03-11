@@ -6,7 +6,6 @@
         private $dbname;
         private $username;
         private $password;
-        
 
         public function __construct() {
             $this->username = getenv('USERNAME');
@@ -17,11 +16,10 @@
         }
 
         public function connect() {
-            
-            if($this->conn) {
-                // connection already exists, return it
+            if ($this->conn) {
                 return $this->conn;
             } else {
+
                 $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->dbname};";
 
                 try {
@@ -30,7 +28,7 @@
                     return $this->conn;
                 } catch(PDOException $e) {
                     echo 'Connection Error: ' . $e->getMessage();
-                }            
-            }            
+                }
+            }
         }
     }
