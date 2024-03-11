@@ -32,7 +32,7 @@ INSERT INTO categories (category) VALUES
 ('Funny'),
 ('Science');
 
-CREATE TABLE quotes (
+CREATE TABLE IF NOT EXISTS quotes (
     id          SERIAL PRIMARY KEY NOT NULL,
     quote       TEXT               NOT NULL,
     author_id   INT                NOT NULL,

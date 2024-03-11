@@ -12,29 +12,27 @@
         // Get ID
         $category->id = $_GET['id'];
 
-        // Category read query
+        // category read_single query
         $result = $category->read_single();
 
         // Get row count
         $num = $result->rowCount();
 
-        // Check if any Categories
+        // Check if any categories
         if($num > 0) {
-                $category_arr = array();
+            $category_arr = array();
 
-                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 extract($row);
 
-                $category_item = array(
+                $category_arr = array(
                     'id' => $id,
                     'category' => $category
                 );
 
-                array_push($category_arr, $category_item);
-                }
-
                 // Turn to JSON & output
                 echo json_encode($category_arr);
+            }
 
         } else {
                 // No Categories
