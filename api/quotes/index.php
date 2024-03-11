@@ -1,11 +1,7 @@
 <?php
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-    $method = $_SERVER['REQUEST_METHOD'];
-
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
-    require_once '../../models/Quote.php';    
+    $method = $_SERVER['REQUEST_METHOD']; 
 
     // Required for tests
     if ($method === 'OPTIONS') {
@@ -14,6 +10,10 @@
         exit();
     } 
     
+    require_once '../../config/Database.php';
+    //require_once '../../config/DatabaseLocal.php';
+    require_once '../../models/Quote.php';   
+
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
