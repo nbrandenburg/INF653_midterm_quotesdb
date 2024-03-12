@@ -8,7 +8,7 @@
 
     $author->author = $data->author;
 
-    if($author->create()) {        
+    if($author->author != NULL && $author->create()) {        
         
         $author->read_single();
     
