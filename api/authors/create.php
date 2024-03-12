@@ -8,7 +8,7 @@
 
     $author->author = $data->author;
 
-    if(isset($_GET['author']) && $author->create()) {        
+    if($author->create()) {        
         
         $author->read_single();
     
