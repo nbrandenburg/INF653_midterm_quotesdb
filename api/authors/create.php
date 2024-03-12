@@ -9,15 +9,8 @@
     $author->author = $data->author;
 
     if(isset($_GET['author']) && $author->create()) {        
-            
-        // Create array
-        $author_arr = array(
-            'id' => $author->id,
-            'author' => $author->author
-        );
-
-        // Make JSON
-        echo json_encode($author_arr);
+        
+        $author->read_single();
     
     } else {
         echo json_encode(array('message' => 'Missing Required Parameters'));
