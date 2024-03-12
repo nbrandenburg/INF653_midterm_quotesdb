@@ -38,7 +38,7 @@
         }
 
         // Get Single Quote
-        public function read_single() {
+        public function read_single($id) {
             //Create query
             $query = 'SELECT 
                         q.id,
@@ -56,25 +56,38 @@
             $stmt = $this->conn->prepare($query);
 
             // Bind data
-            $stmt-> bindParam(':id', $this->id);
+            $stmt-> bindParam(':id', $id);
             $stmt-> bindParam(':author_id', $this->author_id);
             $stmt-> bindParam(':category_id', $this->category_id);
 
             // Execute query
             $stmt->execute();
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Get row count
+        $num = $stmt->rowCount();
 
-            // set properties
-            $this->id = $row['id'];
-            $this->quote = $row['quote'] ?? NULL;
-            $this->author = $row['author'] ?? NULL;
-            $this->category = $row['category'] ?? NULL;
-            $this->author_id = $row['author_id'] ?? NULL;
-            $this->category_id = $row['category_id'] ?? NULL;
+        // Check if any quotes
+        if($num > 0) {
+          $quote_arr = array();
 
-            return $stmt;
-        } 
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+              extract($row);
+
+              $quote_arr = array(
+                  'id' => $id,
+                  'quote' => $quote,
+                  'author' => $author,
+                  'category' => $category
+              );
+          }
+
+          return $quote_arr;
+            
+        } else {
+          // No quotes
+          return array('message' => 'No Quotes Found');
+        }
+      }
         
         // Create Quote
         public function create() {

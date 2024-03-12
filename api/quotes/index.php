@@ -10,9 +10,10 @@
         exit();
     } 
     
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
-    require_once '../../models/Quote.php';   
+    //require_once '../../config/Database.php';
+    require_once '../../config/DatabaseLocal.php';
+    require_once '../../models/Quote.php';
+    require_once '../../functions/isValid.php';
 
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));

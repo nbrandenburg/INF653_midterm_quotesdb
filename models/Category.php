@@ -29,26 +29,47 @@
             return $stmt;
         }
 
-        // Get Single Category
-        public function read_single() {
-            // Create query
-            $query = 'SELECT id, category
-                    FROM ' . $this->table . 
-                    ' WHERE id = :id 
-                      OR category = :category ';
+      // Get Single Category
+      public function read_single($id) {
+        // Create query
+        $query = 'SELECT id, category
+                  FROM ' . $this->table . 
+                  ' WHERE id = :id
+                    OR category = :category ';
 
-            //Prepare statement
-            $stmt = $this->conn->prepare($query);
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
 
-            // Bind ID
-            $stmt->bindParam(':id', $this->id);
-            $stmt->bindParam(':category', $this->category);
+        // Bind ID
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':category', $this->category);
 
-            // Execute query
-            $stmt->execute();
+        // Execute query
+        $stmt->execute();
 
-            return $stmt;
+        // Get row count
+        $num = $stmt->rowCount();
+
+        // Check if any categories
+        if($num > 0) {
+          $category_arr = array();
+
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+              extract($row);
+
+              $category_arr = array(
+                  'id' => $id,
+                  'category' => $category
+              );
+          }
+
+          return $category_arr;
+            
+        } else {
+          // No categories
+          return array('message' => 'category_id Not Found');
         }
+      }
 
         // Create Category
         public function create() {
@@ -59,11 +80,8 @@
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
 
-            // Clean data
-            $this->category = htmlspecialchars(strip_tags($this->category));
-
             // Bind data
-            $stmt-> bindParam(':category', $this->category);
+            $stmt-> bindParam(':category', $this->category) ?? die();
 
             // Execute query
             return $stmt->execute() ? true : false;

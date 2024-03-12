@@ -29,7 +29,7 @@
       }
 
       // Get Single Author
-      public function read_single() {
+      public function read_single($id) {
         // Create query
         $query = 'SELECT id, author
                   FROM ' . $this->table . 
@@ -40,13 +40,34 @@
         $stmt = $this->conn->prepare($query);
 
         // Bind ID
-        $stmt->bindParam(':id', $this->author);
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':author', $this->author);
 
         // Execute query
         $stmt->execute();
 
-        return $stmt;
+        // Get row count
+        $num = $stmt->rowCount();
+
+        // Check if any Authors
+        if($num > 0) {
+          $author_arr = array();
+
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+              extract($row);
+
+              $author_arr = array(
+                  'id' => $id,
+                  'author' => $author
+              );
+          }
+
+          return $author_arr;
+            
+        } else {
+          // No Authors
+          return array('message' => 'author_id Not Found');
+        }
       }
 
       // Create Author
@@ -58,11 +79,8 @@
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
 
-        // Clean data
-        $this->author = htmlspecialchars(strip_tags($this->author));
-
         // Bind data
-        $stmt-> bindParam(':author', $this->author);
+        $stmt-> bindParam(':author', $this->author) ?? die();
 
         // Execute query
         return $stmt->execute() ? true : false;

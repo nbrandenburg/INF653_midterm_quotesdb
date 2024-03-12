@@ -9,35 +9,17 @@
     // If id is set
     if(isset($_GET['id'])) {
 
-        // Get ID
-        $category->id = $_GET['id'];
+        // Clean data
+        $id = htmlspecialchars(strip_tags($_GET['id']));
 
-        // category read_single query
-        $result = $category->read_single();
+        $result = isValid($id, $category);
 
-        // Get row count
-        $num = $result->rowCount();
-
-        // Check if any categories
-        if($num > 0) {
-            $category_arr = array();
-
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                extract($row);
-
-                $category_arr = array(
-                    'id' => $id,
-                    'category' => $category
-                );
-
-                // Turn to JSON & output
-                echo json_encode($category_arr);
-            }
-
-        } else {
-                // No Categories
-                echo json_encode(
-                array('message' => 'category_id Not Found')
-                );
-        }
+        // Turn to JSON & output
+        echo json_encode($result);
+    }
+    
+    else {
+        // No categories
+        echo json_encode(
+        array('message' => 'category_id Not Found'));
     }
