@@ -8,8 +8,8 @@
 
     $author->author = $data->author;
 
-    // Create author
-    if($author->create()) {
+    if(isset($_GET['author']) && $author->create()) {        
+            
         // Create array
         $author_arr = array(
             'id' => $author->id,
@@ -18,7 +18,7 @@
 
         // Make JSON
         echo json_encode($author_arr);
-
+    
     } else {
-        echo json_encode(array('message' => 'Author Not Created'));
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }
