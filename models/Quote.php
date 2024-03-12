@@ -48,13 +48,17 @@
                       FROM ' . $this->table . ' q
                       INNER JOIN authors a ON a.id = q.author_id
                       INNER JOIN categories c ON c.id = q.category_id
-                      WHERE q.id = :id';
+                      WHERE q.id = :id
+                      OR a.id = :author_id
+                      OR c.id = :category_id ';
 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
 
             // Bind data
             $stmt-> bindParam(':id', $this->id);
+            $stmt-> bindParam(':author_id', $this->author_id);
+            $stmt-> bindParam(':category_id', $this->category_id);
 
             // Execute query
             $stmt->execute();
@@ -62,22 +66,31 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // set properties
+            $this->id = $row['id'];
             $this->quote = $row['quote'] ?? NULL;
             $this->author = $row['author'] ?? NULL;
             $this->category = $row['category'] ?? NULL;
+            $this->author_id = $row['author_id'] ?? NULL;
+            $this->category_id = $row['category_id'] ?? NULL;
+
+            return $stmt;
         } 
         
         // Create Quote
         public function create() {
             // Create Query
             $query = 'INSERT INTO ' . $this->table . '
-                    SET quote = :quote, author_id = :author_id, category_id = :category_id ';
+                    SET quote = :quote, 
+                    author_id = :author_id, 
+                    category_id = :category_id ';
 
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
 
             // Clean data
             $this->quote = htmlspecialchars(strip_tags($this->quote));
+            $this->author_id = htmlspecialchars(strip_tags($this->author_id));
+            $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
             // Bind data
             $stmt-> bindParam(':quote', $this->quote);

@@ -6,14 +6,7 @@
     // Instantiate category object
     $category = new Category($db);
 
-    // Set ID to update
-    $category->id = $data->id ?? NULL;
-    $category->category = $data->category ?? NULL;
-
-    // Category update query
-    $updateResult = $category->update();
-
-    if($updateResult) {
+    if($category->update()) {
         // Category read_single query
         $result = $category->read_single();
 

@@ -1,24 +1,40 @@
 <?php
-    // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
+  // Instantiate DB & connect
+  $database = new Database();
+  $db = $database->connect();
 
-    // Instantiate category object
-    $category = new Category($db);
+  // Instantiate category object
+  $category = new Category($db);
 
-    $category->category = $data->category;
+  $category->category = $data->category;
 
-    // Create category
-    if($category->create()) {
-        // Create array
-        $category_arr = array(
-            'id' => $category->id,
-            'category' => $category->category
-        );
+  // Create category
+  if($category->create()) {
 
-        // Make JSON
-        echo json_encode($category_arr);
+        $result = $category->read_single();
+
+        // Get row count
+        $num = $result->rowCount();
+
+        // Check if any categories
+        if($num > 0) {
+            
+            $category_arr = array();
+
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+
+                $category_arr = array(
+                    'id' => $id,
+                    'category' => $category
+                );
+
+                // Turn to JSON & output
+                echo json_encode($category_arr);
+            }
+        }
 
     } else {
-        echo json_encode(array('message' => 'Category Not Created'));
+        echo json_encode(
+        array('message' => 'Missing Required Parameters'));
     }

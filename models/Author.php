@@ -33,13 +33,15 @@
         // Create query
         $query = 'SELECT id, author
                   FROM ' . $this->table . 
-                  ' WHERE id = :id ';
+                  ' WHERE id = :id
+                    OR author = :author ';
 
         //Prepare statement
         $stmt = $this->conn->prepare($query);
 
         // Bind ID
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':id', $this->author);
+        $stmt->bindParam(':author', $this->author);
 
         // Execute query
         $stmt->execute();

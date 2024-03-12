@@ -6,14 +6,8 @@
     // Instantiate author object
     $author = new Author($db);
 
-    // Set ID to update
-    $author->id = $data->id ?? NULL;
-    $author->author = $data->author ?? NULL;
-
-    // Author update query
-    $updateResult = $author->update();
-
-    if($updateResult) {
+    if($author->update()) {
+        
         // Author read_single query
         $result = $author->read_single();
 

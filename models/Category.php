@@ -34,13 +34,15 @@
             // Create query
             $query = 'SELECT id, category
                     FROM ' . $this->table . 
-                    ' WHERE id = :id ';
+                    ' WHERE id = :id 
+                      OR category = :category ';
 
             //Prepare statement
             $stmt = $this->conn->prepare($query);
 
             // Bind ID
             $stmt->bindParam(':id', $this->id);
+            $stmt->bindParam(':category', $this->category);
 
             // Execute query
             $stmt->execute();

@@ -12,17 +12,32 @@
 
     // Create quote
     if($quote->create()) {
-        // Create array
-        $quote_arr = array(
-            'id' => $quote->id,
-            'quote' => $quote->quote,
-            'author_id' => $quote->author_id,
-            'category_id' => $quote->category_id
-        );
 
-        // Make JSON
-        echo json_encode($quote_arr);
+        $result = $quote->read_single();
+
+        // Get row count
+        $num = $result->rowCount();
+
+        // Check if any quotes
+        if($num > 0) {
+            
+            $quote_arr = array();
+
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+
+                $quote_arr = array(
+                    'id' => $id,
+                    'quote' => $quote,
+                    'author_id' => $author_id,
+                    'category_id' => $category_id
+                );
+
+                // Turn to JSON & output
+                echo json_encode($quote_arr);
+            }
+        }
 
     } else {
-        echo json_encode(array('message' => 'Quote Not Created'));
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }
