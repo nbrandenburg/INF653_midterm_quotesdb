@@ -6,7 +6,7 @@
     // Instantiate author object
     $author = new Author($db);
 
-    $author->author = $data->author;
+    $author->author = htmlspecialchars(strip_tags($data['author']));
 
     // Create author
     try {
@@ -14,12 +14,17 @@
             throw new Exception();
         }
 
-        $author->create();
+        if($author->create()) {
+            
+            $id = $author->id;
+            $model = "author";
+            $result = isValid($id, $model);
+    
+            echo json_encode($result);
 
-        $id = $author->id;
-        $result = isValid($id, $author);
-
-        echo json_encode($result);
+        } else {
+            throw new Exception();
+        }        
 
     } catch(PDOException $e) {
         echo json_encode(array('message' => 'Missing Required Parameters'));

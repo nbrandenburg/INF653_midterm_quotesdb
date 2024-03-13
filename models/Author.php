@@ -79,11 +79,8 @@
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
 
-        // Clean data
-        $this->author = htmlspecialchars(strip_tags($this->author));
-
         // Bind data
-        $stmt-> bindParam(':author', $this->author) ?? die();
+        $stmt-> bindParam(':author', $this->author);
 
         // Execute query
         return $stmt->execute() ? true : false;
