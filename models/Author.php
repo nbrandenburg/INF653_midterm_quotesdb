@@ -74,8 +74,7 @@
       public function create() {
         // Create Query
         $query = 'INSERT INTO ' . $this->table . ' (author)
-                  VALUES (author = :author) 
-                  RETURNING id';
+                  VALUES (author = :author) ';
 
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
@@ -83,12 +82,8 @@
         // Bind data
         $stmt-> bindParam(':author', $this->author);
 
-        // Execute query
-        $stmt->execute();
-
-        $id = $stmt->fetchColumn();
-
-        return $id;
+        // Execute query and return
+        return $stmt->execute() ? true : false;
       }
   
     // Update Author
