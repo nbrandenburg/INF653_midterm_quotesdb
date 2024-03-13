@@ -12,11 +12,11 @@
     try {
         if($author->author == NULL) {
             throw new Exception();
-        }        
+        }
 
-        $id = $author->create();
-        $model = "author";
-        $result = isValid($id, $model);
+        $author->create(); 
+        $id = $author->id;
+        $result = $author->read_single($id);
 
         echo json_encode($result);
 

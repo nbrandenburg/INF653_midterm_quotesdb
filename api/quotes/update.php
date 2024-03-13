@@ -3,37 +3,38 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate quote object
+    // Instantiate author object
     $quote = new Quote($db);
 
+    $quote->quote = htmlspecialchars(strip_tags($data['quote']));
+    $quote->id = htmlspecialchars(strip_tags($data['id']));
+    $quote->author_id = htmlspecialchars(strip_tags($data['author_id']));
+    $quote->category_id = htmlspecialchars(strip_tags($data['category_id']));
+
+
     // Update quote
-    if($quote->update()) {
-
-        $result = $quote->read_single();
-
-        // Get row count
-        $num = $result->rowCount();
-
-        // Check if any quotes
-        if($num > 0) {
-            
-            $quote_arr = array();
-
-            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                extract($row);
-
-                $quote_arr = array(
-                    'id' => $id,
-                    'quote' => $quote,
-                    'author_id' => $author_id,
-                    'category_id' => $category_id
-                );
-
-                // Turn to JSON & output
-                echo json_encode($quote_arr);
-            }
+    try {
+        if($quote->quote == NULL || 
+           $quote->id == NULL ||
+           $quote->author_id == NULL || 
+           $quote->category_id == NULL) {
+            throw new Exception();
         }
 
-    } else {
+        $quote->update(); 
+        
+        $result = array(
+            'id' => $quote->id,
+            'quote' => $quote->quote,
+            'author_id' => $quote->author_id,
+            'category_id' => $quote->category_id
+        );
+
+        echo json_encode($result);
+
+    } catch(PDOException $e) {
+        echo json_encode(array('message' => 'No Quotes Found'));
+        
+    } catch(Exception $noQuote) {
         echo json_encode(array('message' => 'No Quotes Found'));
     }

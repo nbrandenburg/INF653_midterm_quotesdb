@@ -13,20 +13,17 @@
     require_once '../../config/Database.php';
     //require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Author.php';
-    require_once '../../functions/isValid.php';
     
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Read
     if ($method === 'GET' && !isset($_GET['id'])) {
-        header('Access-Control-Allow-Methods: GET');
         require_once 'read.php';    
     }
 
     // Read Single
     elseif ($method === 'GET' && isset($_GET['id'])) {
-        header('Access-Control-Allow-Methods: GET');
         require_once 'read_single.php';    
     }
 

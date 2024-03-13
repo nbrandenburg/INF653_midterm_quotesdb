@@ -11,7 +11,7 @@
         // Clean data
         $id = htmlspecialchars(strip_tags($_GET['id']));
 
-        $result = isValid($id, $quote);
+        $result = $quote->read_single($id);
 
         // Turn to JSON and output
         echo json_encode($result);

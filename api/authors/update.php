@@ -6,33 +6,25 @@
     // Instantiate author object
     $author = new Author($db);
 
-    if($author->update()) {
-        
-        // Author read_single query
-        $result = $author->read_single();
+    $author->author = htmlspecialchars(strip_tags($data['author']));
+    $author->id = htmlspecialchars(strip_tags($data['id']));
 
-        // Get row count
-        $num = $result->rowCount();
 
-        // Check if any Authors
-        if($num > 0) {
-                $author_arr = array();
-
-                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-
-                    $author_item = array(
-                        'id' => $id,
-                        'author' => $author
-                    );
-
-                    array_push($author_arr, $author_item);
-                }
-
-                // Turn to JSON & output
-                echo json_encode($author_arr);
-
-        } else {
-            echo json_encode(array('message' => 'Missing Required Parameters'));
+    // Update author
+    try {
+        if($author->author == NULL || $author->id == NULL) {
+            throw new Exception();
         }
+
+        $author->update(); 
+        $id = $author->id;
+        $result = $author->read_single($id);
+
+        echo json_encode($result);
+
+    } catch(PDOException $e) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
+        
+    } catch(Exception $noAuthor) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }

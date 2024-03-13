@@ -10,8 +10,7 @@
     if(isset($_GET['id'])) {
 
         $id = htmlspecialchars(strip_tags($_GET['id']));
-
-        $result = isValid($id, $author);
+        $result = $author->read_single($id);
 
         // Turn to JSON & output
         echo json_encode($result);

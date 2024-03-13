@@ -6,24 +6,28 @@
     // Instantiate author object
     $author = new Author($db);
 
-    // Set ID to delete
-    $author->id = $data->id;
+    $author->id = htmlspecialchars(strip_tags($data['id']));
 
-    // Delete post
+    // Delete author
     try {
-        $author->delete();
+        if($author->id == NULL) {
+            throw new Exception();
+        }
 
-        $author_arr = array(
-            'id' => $data->id,
-        );
+        if($author->delete()) {
+            $result = array(
+                'id' => $author->id
+            );
 
-        echo json_encode($author_arr);
+            echo json_encode($result);
+        }
+        else {
+            throw new Exception();
+        }        
 
     } catch(PDOException $e) {
-
-        $author_arr = array(
-            'id' => $data->id,
-        );
-
-        echo json_encode($author_arr);
+        echo json_encode(array('message' => 'Missing Required Parameters'));
+        
+    } catch(Exception $noAuthor) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }

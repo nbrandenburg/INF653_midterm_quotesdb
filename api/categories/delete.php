@@ -6,24 +6,28 @@
     // Instantiate category object
     $category = new Category($db);
 
-    // Set ID to delete
-    $category->id = $data->id;
+    $category->id = htmlspecialchars(strip_tags($data['id']));
 
-    // Delete post
+    // Delete category
     try {
-        $category->delete();
+        if($category->id == NULL) {
+            throw new Exception();
+        }
 
-        $category_arr = array(
-            'id' => $data->id,
-        );
+        if($category->delete()) {
+            $result = array(
+                'id' => $category->id
+            );
 
-        echo json_encode($category_arr);
+            echo json_encode($result);
+        }
+        else {
+            throw new Exception();
+        }        
 
     } catch(PDOException $e) {
-
-        $category_arr = array(
-            'id' => $data->id,
-        );
-
-        echo json_encode($category_arr);
+        echo json_encode(array('message' => 'Missing Required Parameters'));
+        
+    } catch(Exception $noCategory) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }

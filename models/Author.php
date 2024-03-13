@@ -73,19 +73,23 @@
       // Create Author
       public function create() {
         // Create Query
-        $query = 'INSERT INTO ' . $this->table . ' (author)
-                  VALUES (author = :author) ';
+        $query = 'INSERT INTO ' .
+          $this->table . '
+        SET author = :author';
 
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
 
+        // Clean data
+        $this->author = htmlspecialchars(strip_tags($this->author));
+
         // Bind data
         $stmt-> bindParam(':author', $this->author);
 
-        // Execute query and return
-        return $stmt->execute() ? true : false;
-      }
-  
+        // Execute query
+         return $stmt->execute() ? true : false;
+      } 
+
     // Update Author
     public function update() {
       // Create Query
@@ -95,10 +99,6 @@
 
       // Prepare Statement
       $stmt = $this->conn->prepare($query);
-
-      // Clean data
-      $this->author = htmlspecialchars(strip_tags($this->author));
-      $this->id = htmlspecialchars(strip_tags($this->id));
 
       // Bind data
       $stmt-> bindParam(':author', $this->author);
@@ -116,9 +116,6 @@
 
       // Prepare Statement
       $stmt = $this->conn->prepare($query);
-
-      // clean data
-      $this->id = htmlspecialchars(strip_tags($this->id));
 
       // Bind Data
       $stmt-> bindParam(':id', $this->id);

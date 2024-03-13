@@ -12,7 +12,7 @@
         // Clean data
         $id = htmlspecialchars(strip_tags($_GET['id']));
 
-        $result = isValid($id, $category);
+        $result = $category->read_single($id);
 
         // Turn to JSON & output
         echo json_encode($result);

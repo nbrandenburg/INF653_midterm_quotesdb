@@ -3,23 +3,31 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate quote object
+    // Instantiate category object
     $quote = new Quote($db);
 
-    // Set ID to delete
-    $quote->id = $data->id;
+    $quote->id = htmlspecialchars(strip_tags($data['id']));
 
     // Delete quote
+    try {
+        if($quote->id == NULL) {
+            throw new Exception();
+        }
 
-    if($quote->delete()) {
-
-            $quote_arr = array(
-                'id' => $data->id
+        if($quote->delete()) {
+            $result = array(
+                'id' => $quote->id
             );
 
-            // Turn to JSON & output
-            echo json_encode($quote_arr);
+            echo json_encode($result);
+        }
+        else {
+            throw new Exception();
+        }        
 
-    } else {
+    } catch(PDOException $e) {
+        echo json_encode(array('message' => 'No Quotes Found'));
+        
+    } catch(Exception $noQuote) {
         echo json_encode(array('message' => 'No Quotes Found'));
     }

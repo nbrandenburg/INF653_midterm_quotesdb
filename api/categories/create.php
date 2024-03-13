@@ -6,7 +6,7 @@
     // Instantiate category object
     $category = new Category($db);
 
-    $category->category = $data->category;
+    $category->category = htmlspecialchars(strip_tags($data['category']));
 
     // Create category
     try {
@@ -15,9 +15,8 @@
         }
 
         $category->create();
-
         $id = $category->id;
-        $result = isValid($id, $category);
+        $result = $category->read_single($id);
 
         echo json_encode($result);
 

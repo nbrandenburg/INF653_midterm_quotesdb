@@ -3,35 +3,28 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate category object
+    // Instantiate author object
     $category = new Category($db);
 
-    if($category->update()) {
-        // Category read_single query
-        $result = $category->read_single();
+    $category->category = htmlspecialchars(strip_tags($data['category']));
+    $category->id = htmlspecialchars(strip_tags($data['id']));
 
-        // Get row count
-        $num = $result->rowCount();
 
-        // Check if any Categories
-        if($num > 0) {
-                $category_arr = array();
-
-                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-
-                    $category_item = array(
-                        'id' => $id,
-                        'category' => $category
-                    );
-
-                    array_push($category_arr, $category_item);
-                }
-
-                // Turn to JSON & output
-                echo json_encode($category_arr);
-
-        } else {
-            echo json_encode(array('message' => 'Missing Required Parameters'));
+    // Update category
+    try {
+        if($category->category == NULL || $category->id == NULL) {
+            throw new Exception();
         }
+
+        $category->update(); 
+        $id = $category->id;
+        $result = $category->read_single($id);
+
+        echo json_encode($result);
+
+    } catch(PDOException $e) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
+        
+    } catch(Exception $noCategory) {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
     }

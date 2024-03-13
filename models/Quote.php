@@ -118,18 +118,19 @@
         public function update() {
             // Create Query
             $query = 'UPDATE ' . $this->table . '
-                    SET quote = :quote
-                    WHERE id = :id';
+                      SET quote = :quote, 
+                          author_id = :author_id, 
+                          category_id = :category_id 
+                          WHERE id = :id';
+
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
-    
-            // Clean data
-            $this->quote = htmlspecialchars(strip_tags($this->quote));
-            $this->id = htmlspecialchars(strip_tags($this->id));
     
             // Bind data
             $stmt-> bindParam(':quote', $this->quote);
             $stmt-> bindParam(':id', $this->id);
+            $stmt-> bindParam(':author_id', $this->author_id);
+            $stmt-> bindParam(':category_id', $this->category_id);
     
             // Execute query
             return $stmt->execute() ? true : false;
@@ -138,13 +139,11 @@
         // Delete Quote
         public function delete() {
             // Create query
-            $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+            $query = 'DELETE FROM ' . $this->table . 
+                    ' WHERE id = :id';
     
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
-    
-            // clean data
-            $this->id = htmlspecialchars(strip_tags($this->id));
     
             // Bind Data
             $stmt-> bindParam(':id', $this->id);
