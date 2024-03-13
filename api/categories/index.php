@@ -10,13 +10,13 @@
         exit();
     } 
 
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
+    //require_once '../../config/Database.php';
+    require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Category.php';
     require_once '../../functions/isValid.php';  
     
     // Get raw posted data
-    $data = json_decode(file_get_contents("php://input"));
+    $data = json_decode(file_get_contents("php://input"), true);
 
     // Read
     if ($method === 'GET' && !isset($_GET['id'])) {

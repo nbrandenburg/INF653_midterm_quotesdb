@@ -9,7 +9,6 @@
     // If id is set
     if(isset($_GET['id'])) {
 
-        // Clean data
         $id = htmlspecialchars(strip_tags($_GET['id']));
 
         $result = isValid($id, $author);

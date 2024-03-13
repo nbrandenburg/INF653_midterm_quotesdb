@@ -80,6 +80,9 @@
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
 
+            // Clean data
+            $this->category = htmlspecialchars(strip_tags($this->category));
+
             // Bind data
             $stmt-> bindParam(':category', $this->category) ?? die();
 

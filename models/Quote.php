@@ -106,9 +106,9 @@
             $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
             // Bind data
-            $stmt-> bindParam(':quote', $this->quote);
-            $stmt-> bindParam(':author_id', $this->author_id);
-            $stmt-> bindParam(':category_id', $this->category_id);
+            $stmt-> bindParam(':quote', $this->quote) ?? die();
+            $stmt-> bindParam(':author_id', $this->author_id) ?? die();
+            $stmt-> bindParam(':category_id', $this->category_id) ?? die();
 
             // Execute query
             return $stmt->execute() ? true : false;
