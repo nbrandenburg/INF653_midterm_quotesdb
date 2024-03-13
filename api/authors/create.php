@@ -12,19 +12,13 @@
     try {
         if($author->author == NULL) {
             throw new Exception();
-        }
-
-        if($author->create()) {
-            
-            $id = $author->id;
-            $model = "author";
-            $result = isValid($id, $model);
-    
-            echo json_encode($result);
-
-        } else {
-            throw new Exception();
         }        
+
+        $id = $author->create();
+        $model = "author";
+        $result = isValid($id, $model);
+
+        echo json_encode($result);
 
     } catch(PDOException $e) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
