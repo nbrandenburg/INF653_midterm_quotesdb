@@ -75,7 +75,7 @@
         public function create() {
             // Create Query
             $query = 'INSERT INTO ' . $this->table . '
-                    SET category = :category';
+                      SET category = :category';
 
             // Prepare Statement
             $stmt = $this->conn->prepare($query);
