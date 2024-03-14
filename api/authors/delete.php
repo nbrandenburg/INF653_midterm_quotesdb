@@ -14,9 +14,12 @@
             throw new Exception();
         }
 
+        $author_arr = $author->read_single($author->id);
+
         if($author->delete()) {
+
             $result = array(
-                'id' => $author->id
+                'id' => $author_arr['id']
             );
 
             echo json_encode($result);

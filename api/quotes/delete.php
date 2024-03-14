@@ -10,7 +10,13 @@
 
     // Delete quote
     try {
+        // Make sure id is valid
         if($quote->id == NULL) {
+            throw new Exception();
+        }
+
+        $quote_arr = $quote->read_single($quote->id);
+        if($quote_arr['quote'] == NULL) {
             throw new Exception();
         }
 

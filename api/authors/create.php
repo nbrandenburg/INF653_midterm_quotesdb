@@ -16,9 +16,13 @@
 
         $author->create(); 
         $id = $author->id;
-        $result = $author->read_single($id);
+        $author_arr = $author->read_single($id);
+        $result = array(
+            'id' => $author_arr['id'],
+            'author' => $author_arr['author']
+        );
 
-        print_r(json_encode($result));
+        echo json_encode($result);
 
     } catch(PDOException $e) {
         echo json_encode(array('message' => 'Missing Required Parameters'));

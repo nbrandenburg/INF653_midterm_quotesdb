@@ -16,9 +16,13 @@
 
         $category->create();
         $id = $category->id;
-        $result = $category->read_single($id);
+        $category_arr = $category->read_single($id);
+        $result = array(
+            'id' => $category_arr['id'],
+            'category' => $category_arr['category']
+        );
 
-        print_r(json_encode($result));
+        echo json_encode($result);
 
     } catch(PDOException $e) {
         echo json_encode(array('message' => 'Missing Required Parameters'));

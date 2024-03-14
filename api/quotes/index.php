@@ -10,8 +10,8 @@
         exit();
     } 
     
-    require_once '../../config/Database.php';
-    //require_once '../../config/DatabaseLocal.php';
+    //require_once '../../config/Database.php';
+    require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Quote.php';
 
     // Get raw posted data
@@ -36,6 +36,8 @@
     // Update
     elseif ($method === 'PUT') {
         header('Access-Control-Allow-Methods: PUT');
+        require_once '../../models/Author.php';
+        require_once '../../models/Category.php';
         require_once 'update.php';
     }
     

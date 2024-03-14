@@ -14,9 +14,12 @@
             throw new Exception();
         }
 
+        $category_arr = $category->read_single($category->id);
+
         if($category->delete()) {
+
             $result = array(
-                'id' => $category->id
+                'id' => $category_arr['id']
             );
 
             echo json_encode($result);
