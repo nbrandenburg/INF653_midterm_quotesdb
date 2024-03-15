@@ -18,7 +18,6 @@
         $id = $author->id;
         $author_arr = $author->read_single($id);
         $result = array(
-            'id' => $author_arr['id'],
             'author' => $author_arr['author']
         );
 
