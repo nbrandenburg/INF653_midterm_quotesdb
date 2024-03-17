@@ -1,4 +1,7 @@
 <?php
+    class NoAuthor extends Exception {}
+    class AuthorAlreadyExists extends Exception {}
+
     // Instantiate DB & connect
     $database = new Database();
     $db = $database->connect();
@@ -10,22 +13,45 @@
 
     // Create author
     try {
+        // Make sure author name is provided
         if($author->author == NULL) {
-            throw new Exception();
+            throw new NoAuthor();
         }
 
-        $author->create(); 
-        $id = $author->id;
-        $author_arr = $author->read_single($id);
-        $result = array(
-            'author' => $author_arr['author']
+        // Create an author array
+        $author_arr = array(
+            'id' => 0,
+            'author' => ''
         );
 
-        echo json_encode($result);
+        // Make sure author doesn't already exist
+        $author_arr = $author->read_single($author->author);
+        $name = $author_arr['author'];
+        if($author->author == $name) {
+            throw new AuthorAlreadyExists();
+        }
 
-    } catch(PDOException $e) {
+        $author->create();
+        $id = $author->id;
+        // Fill Array with new Author data
+        $author_arr = $author->read_single($id);
+
+/*         $result = array(
+            'id' => $new_author_arr['id'],
+            'author' => $new_author_arr['author']
+        );
+ */
+        echo json_encode($author_arr);
+
+    } catch(NoAuthor $noAuthor) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
+
+    } catch(AuthorAlreadyExists $AuthorAlreadyExists) {
         
-    } catch(Exception $noAuthor) {
-        echo json_encode(array('message' => 'Missing Required Parameters'));
+/*         $result = array(
+            'id' => $author_arr['id'],
+            'author' => $author_arr['author']
+        );
+ */
+            echo json_encode($author_arr);
     }
