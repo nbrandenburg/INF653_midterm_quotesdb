@@ -24,9 +24,6 @@
 
         echo json_encode($result);
 
-    } catch(PDOException $e) {
-        echo json_encode(array('message' => 'Missing Required Parameters'));
-
     } catch(Exception $noCategory) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
     }
