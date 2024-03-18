@@ -22,7 +22,7 @@
 
             // return id of deleted author in json
             $result = array(
-                'id' => $author_arr['id']
+                'id' => $author->id
             );
 
             echo json_encode($result);
@@ -33,7 +33,7 @@
 
     } catch(NoAuthor $noAuthor) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
-        
+
     } catch(Exception $authorNotDeleted) {
         echo json_encode(array('message' => 'Author Not Deleted'));
     }
