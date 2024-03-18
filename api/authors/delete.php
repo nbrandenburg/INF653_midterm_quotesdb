@@ -7,7 +7,7 @@
     $author = new Author($db);
 
     // Clean and decode input data
-    $author->id = intval(htmlspecialchars(strip_tags($data['id'])));
+    $author->id = htmlspecialchars(strip_tags($data['id']));
 
     try {
         // Make sure id is valid
@@ -15,10 +15,11 @@
             throw new Exception();
         }
 
-        $quote_arr = $quote->read_single($quote->id);
+        $author_arr = $author->read_single($author->id);
         if($author->delete()) {
+            $id = $author->id;
             $result = array(
-                'id' => $author->id
+                'id' => $id
             );
 
             echo json_encode($result);
