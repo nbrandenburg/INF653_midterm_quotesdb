@@ -15,6 +15,7 @@
             throw new Exception();
         }
 
+        $quote_arr = $quote->read_single($quote->id);
         if($author->delete()) {
             $result = array(
                 'id' => $author->id
