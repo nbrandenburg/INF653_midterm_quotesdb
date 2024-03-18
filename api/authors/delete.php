@@ -6,7 +6,7 @@
     // Instantiate object
     $author = new Author($db);
 
-    // Clean and decode input data
+    // Clean input data
     $author->id = htmlspecialchars(strip_tags($data['id']));
 
     try {
@@ -17,7 +17,7 @@
 
         $author_arr = $author->read_single($author->id);
         if($author->delete()) {
-            $id = $author->id;
+            $id = $author_arr['id'];
             $result = array(
                 'id' => $id
             );
