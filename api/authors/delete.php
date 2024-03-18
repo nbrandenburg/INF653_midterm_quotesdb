@@ -28,9 +28,6 @@
             throw new Exception();
         }        
 
-    } catch(PDOException $e) {
-        echo json_encode(array('message' => 'Missing Required Parameters'));
-        
     } catch(Exception $noAuthor) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
     }
