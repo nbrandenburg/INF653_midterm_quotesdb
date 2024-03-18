@@ -1,4 +1,6 @@
 <?php
+    class NoAuthor extends Exception {}
+
     // Instantiate DB & connect
     $database = new Database();
     $db = $database->connect();
@@ -6,18 +8,19 @@
     // Instantiate author object
     $author = new Author($db);
 
+    // Clean input data
     $author->id = htmlspecialchars(strip_tags($data['id']));
 
-    // Delete author
     try {
+        // author id must be provided
         if($author->id == NULL) {
-            throw new Exception();
+            throw new NoAuthor();
         }
 
-        $author_arr = $author->read_single($author->id);
-
+        // delete author
         if($author->delete()) {
 
+            // return id of deleted author in json
             $result = array(
                 'id' => $author_arr['id']
             );
@@ -28,6 +31,9 @@
             throw new Exception();
         }        
 
-    } catch(Exception $noAuthor) {
+    } catch(NoAuthor $noAuthor) {
         echo json_encode(array('message' => 'Missing Required Parameters'));
+        
+    } catch(Exception $authorNotDeleted) {
+        echo json_encode(array('message' => 'Author Not Deleted'));
     }

@@ -14,7 +14,7 @@
     //require_once '../../config/DatabaseLocal.php';
     require_once '../../models/Author.php';
     
-    // Get raw posted data
+    // Get raw posted data in a decoded, associative array
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Read
