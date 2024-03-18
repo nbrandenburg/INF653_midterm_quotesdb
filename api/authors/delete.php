@@ -7,7 +7,7 @@
     $author = new Author($db);
 
     // Clean input data
-    $author->id = htmlspecialchars(strip_tags($data['id']));
+    $author->id = htmlspecialchars(strip_tags($data->id));
 
     try {
         // Make sure id is valid
@@ -15,9 +15,11 @@
             throw new Exception();
         }
 
-        $author_arr = $author->read_single($author->id);
+        // Store id before deletion
+        $id = $author->id;
+
+        // DELETE id
         if($author->delete()) {
-            $id = $author_arr['id'];
             $result = array(
                 'id' => $id
             );
