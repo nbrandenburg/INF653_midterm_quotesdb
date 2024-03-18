@@ -94,7 +94,7 @@
       // Create Query
       $query = 'UPDATE ' . $this->table . '
                 SET author = :author
-                WHERE id = :id';
+                WHERE id = :id ';
 
       // Prepare Statement
       $stmt = $this->conn->prepare($query);
@@ -111,7 +111,7 @@
     public function delete() {
       // Create query
       $query = 'DELETE FROM ' . $this->table . 
-              ' WHERE id = :id';
+              ' WHERE id = :id ';
 
       // Prepare Statement
       $stmt = $this->conn->prepare($query);

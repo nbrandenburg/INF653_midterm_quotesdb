@@ -6,7 +6,8 @@
     // Instantiate object
     $author = new Author($db);
 
-    $author->id = htmlspecialchars(strip_tags($data['id']));
+    // Clean and decode input data
+    $author->id = intval(htmlspecialchars(strip_tags($data['id'])));
 
     try {
         // Make sure id is valid
@@ -23,5 +24,6 @@
         }
 
     } catch(Exception $noAuthor) {
+        
         echo json_encode(array('message' => 'Missing Required Parameters'));
     }
