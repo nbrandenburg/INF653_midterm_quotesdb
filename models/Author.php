@@ -13,7 +13,7 @@
           $this->conn = $db;
       }
 
-      // Get Authors
+      // GET
       public function read() {
         // Create query
         $query = ' SELECT id, author
@@ -28,7 +28,7 @@
         return $stmt;
       }
 
-      // Get Single Author
+      // GET_SINGLE
       public function read_single($id) {
         // Create query
         $query = 'SELECT id, author
@@ -70,7 +70,7 @@
         }
       }
 
-      // Create Author
+      // CREATE
       public function create() {
         // Create Query
         $query = 'INSERT INTO ' . $this->table . '
@@ -89,7 +89,7 @@
          return $stmt->execute() ? true : false;
       } 
 
-    // Update Author
+    // UPDATE
     public function update() {
       // Create Query
       $query = 'UPDATE ' . $this->table . '
@@ -107,7 +107,7 @@
       return $stmt->execute() ? true : false;
     }
 
-    // Delete Author
+    // DELETE
     public function delete() {
       // Create query
       $query = 'DELETE FROM ' . $this->table . 

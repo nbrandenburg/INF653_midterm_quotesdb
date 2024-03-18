@@ -15,7 +15,7 @@
             $this->conn = $db;
         }
 
-        // Get Quotes
+        // GET
         public function read() {
             // Create query
             $query = 'SELECT 
@@ -37,7 +37,7 @@
             return $stmt;
         }
 
-        // Get Single Quote
+        // GET_SINGLE
         public function read_single($id) {
             //Create query
             $query = 'SELECT 
@@ -89,7 +89,7 @@
         }
       }
         
-        // Create Quote
+        // CREATE
         public function create() {
             // Create Query
             $query = 'INSERT INTO ' . $this->table . '
@@ -114,7 +114,7 @@
             return $stmt->execute() ? true : false;
         }
         
-        // Update Quote
+        // UPDATE
         public function update() {
             // Create Query
             $query = 'UPDATE ' . $this->table . '
@@ -136,7 +136,7 @@
             return $stmt->execute() ? true : false;
         }
         
-        // Delete Quote
+        // DELETE
         public function delete() {
             // Create query
             $query = 'DELETE FROM ' . $this->table . 

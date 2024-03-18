@@ -3,7 +3,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate category object
+    // Instantiate object
     $quote = new Quote($db);
 
     $quote->id = htmlspecialchars(strip_tags($data['id']));
@@ -31,9 +31,6 @@
             throw new Exception();
         }        
 
-    } catch(PDOException $e) {
-        echo json_encode(array('message' => 'No Quotes Found'));
-        
     } catch(Exception $noQuote) {
         echo json_encode(array('message' => 'No Quotes Found'));
     }

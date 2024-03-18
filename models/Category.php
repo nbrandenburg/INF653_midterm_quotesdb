@@ -13,7 +13,7 @@
             $this->conn = $db;
         }
 
-        // Get categories
+        // GET
         public function read() {
 
             // Create query
@@ -29,7 +29,7 @@
             return $stmt;
         }
 
-      // Get Single Category
+      // GET_SINGLE
       public function read_single($id) {
         // Create query
         $query = 'SELECT id, category
@@ -71,7 +71,7 @@
         }
       }
 
-        // Create Category
+        // CREATE
         public function create() {
             // Create Query
             $query = 'INSERT INTO ' . $this->table . '
@@ -90,7 +90,7 @@
             return $stmt->execute() ? true : false;
         }
 
-        // Update Category
+        // UPDATE
         public function update() {
             // Create Query
             $query = 'UPDATE ' . $this->table . '
@@ -108,7 +108,7 @@
             return $stmt->execute() ? true : false;
         } 
         
-        // Delete Category
+        // DELETE
         public function delete() {
             // Create query
             $query = 'DELETE FROM ' . $this->table . 
