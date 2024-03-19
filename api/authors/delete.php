@@ -6,29 +6,28 @@
     // Instantiate object
     $author = new Author($db);
 
-    // Clean input data
-    $data->id = htmlspecialchars(strip_tags($data->id));
-    $author->id = $data->id;
+    $author->id = htmlspecialchars(strip_tags($data['id']));
 
+    // Delete author
     try {
-        // Make sure id is provided
-        if($data->id == NULL) {
+        if($author->id == NULL) {
             throw new Exception();
         }
 
-        // Store id before deletion
-        $id = $data->id;
+        $author_arr = $author->read_single($author->id);
 
-        // DELETE id
         if($author->delete()) {
+
             $result = array(
-                'id' => $id
+                'id' => $author_arr['id']
             );
 
             echo json_encode($result);
         }
+        else {
+            throw new Exception();
+        }        
 
     } catch(Exception $noAuthor) {
-        
         echo json_encode(array('message' => 'Missing Required Parameters'));
     }
