@@ -3,25 +3,28 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate author object
+    // Instantiate object
     $author = new Author($db);
 
+    // Clean and decode data
     $author->author = htmlspecialchars(strip_tags($data['author']));
 
-    // Create author
     try {
+        // Check if parameters were provided
         if($author->author == NULL) {
             throw new Exception();
         }
 
+        // Create
         $author->create();
         $id = $author->id;
         $author_arr = $author->read_single($id);
         $result = array(
-            'id' => $author_arr['id'],
+            'id' => strval($author_arr['id']),
             'author' => $author_arr['author']
         );
 
+        // Encode and return
         echo json_encode($result);
 
     } catch(Exception $noAuthor) {
