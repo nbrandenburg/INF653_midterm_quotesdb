@@ -1,5 +1,7 @@
 Author: Nicole Brandenburg
+
 Date: March 19, 2024
+
 Project Homepage: https://lobster-app-rifna.ondigitalocean.app/
 
 This project was deployed using Digital Ocean. 
