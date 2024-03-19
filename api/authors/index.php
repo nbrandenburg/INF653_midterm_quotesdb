@@ -15,7 +15,7 @@
     require_once '../../models/Author.php';
     
     // Get raw posted data in a decoded, associative array
-    $data = json_decode(file_get_contents("php://input"));
+    $data = json_decode(file_get_contents("php://input"), true);
 
     // Read
     if ($method === 'GET' && !isset($_GET['id'])) {
