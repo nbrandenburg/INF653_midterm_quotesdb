@@ -7,16 +7,17 @@
     $author = new Author($db);
 
     // Clean input data
-    $author->id = htmlspecialchars(strip_tags($data->id));
+    $data->id = htmlspecialchars(strip_tags($data->id));
+    $author->id = $data->id;
 
     try {
-        // Make sure id is valid
-        if($author->id == NULL) {
+        // Make sure id is provided
+        if($data->id == NULL) {
             throw new Exception();
         }
 
         // Store id before deletion
-        $id = $author->id;
+        $id = $data->id;
 
         // DELETE id
         if($author->delete()) {
